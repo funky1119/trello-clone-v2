@@ -1,5 +1,5 @@
 {
-  "name": "to-do-list",
+  "name": "trello-clone-v2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -61,5 +61,5 @@
     "@types/react-router-dom": "^5.3.3",
     "file-loader": "^6.2.0"
   },
-  "homepage": "https://funky1119.github.io/to-do-list"
+  "homepage": "https://funky1119.github.io/trello-clone-v2"
 }
