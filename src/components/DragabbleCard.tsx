@@ -3,20 +3,26 @@ import styled from "styled-components";
 import React from "react";
 
 interface IDragabbleCardProps {
-  todo: string;
+  toDoId: number;
+  toDoText: string;
   index: number;
 }
 
-function DragabbleCard({ todo, index }: IDragabbleCardProps) {
+interface ICardProps {
+  isDragging: boolean;
+}
+
+function DragabbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
   return (
-    <Draggable draggableId={todo} index={index}>
-      {(drag) => (
+    <Draggable draggableId={`${toDoId}`} index={index}>
+      {(provider, snapshot) => (
         <Card
-          ref={drag.innerRef}
-          {...drag.draggableProps}
-          {...drag.dragHandleProps}
+          isDragging={snapshot.isDragging}
+          ref={provider.innerRef}
+          {...provider.draggableProps}
+          {...provider.dragHandleProps}
         >
-          {todo}
+          {toDoText}
         </Card>
       )}
     </Draggable>
@@ -25,9 +31,13 @@ function DragabbleCard({ todo, index }: IDragabbleCardProps) {
 
 export default React.memo(DragabbleCard);
 
-const Card = styled.div`
+const Card = styled.div<ICardProps>`
   margin-bottom: 5px;
   border-radius: 5px;
   padding: 10px 10px;
-  background-color: ${(props) => props.theme.cardColor};
+  background-color: ${(props) =>
+    props.isDragging ? props.theme.bgColor : props.theme.cardColor};
+  color: ${(props) => (props.isDragging ? "#FFF" : "none")};
+  box-shadow: ${(props) =>
+    props.isDragging ? "0px 2px 5px rgba(0, 0, 0 , 0.5)" : "none"};
 `;

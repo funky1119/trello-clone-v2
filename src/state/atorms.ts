@@ -1,6 +1,19 @@
 import { atom, selector } from "recoil";
 
-export const toDosState = atom({
+export interface ITodo {
+  id: number;
+  text: string;
+}
+
+interface IBoardListProps {
+  [key: string]: ITodo[];
+}
+
+export const boardListState = atom<IBoardListProps>({
   key: "toDos",
-  default: ["a", "b", "c", "d", "e"],
+  default: {
+    "To Do": [],
+    Doing: [],
+    Done: [],
+  },
 });
