@@ -1,7 +1,7 @@
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { ITodo, boardListState } from "./state/atorms";
+import { boardListState } from "./state/atorms";
 import Board from "./components/Board";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
 
   // destination 종료 위치 정보, source: 시작 위치 정보
   const onDragEnd = (info: DropResult) => {
-    const { destination, source, draggableId } = info;
+    const { destination, source } = info;
 
     if (!destination) return;
 
