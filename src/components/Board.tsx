@@ -26,6 +26,7 @@ function Board({ toDos, boardId }: BoardProps) {
     const newToDo = {
       id: Date.now(),
       text: toDo,
+      boardId,
     };
 
     setBoardList((prev) => ({
@@ -38,9 +39,22 @@ function Board({ toDos, boardId }: BoardProps) {
 
   return (
     <Wrapper>
-      <Title>{boardId}</Title>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Title>{boardId}</Title>
+        <button
+          style={{ position: "absolute", margin: "0 auto", marginRight: 0 }}
+        >
+          s
+        </button>
+      </div>
       <Form onSubmit={handleSubmit(onValid)}>
-        <input
+        <AddTodo
           {...register("toDo", { required: true })}
           type="text"
           placeholder={`Add task on ${boardId}`}
@@ -59,6 +73,7 @@ function Board({ toDos, boardId }: BoardProps) {
                 key={toDo.id}
                 toDoId={toDo.id}
                 toDoText={toDo.text}
+                boardId={toDo.boardId}
                 index={index}
               />
             ))}
@@ -96,12 +111,17 @@ const Area = styled.div<AraaProps>`
       : "transparent"};
   flex-grow: 1;
   transition: background-color 0.3s ease-in-out;
-  padding: 20px;
+  padding: 20px 10px;
 `;
 
 const Form = styled.form`
   width: 100%;
-  input {
-    width: 100%;
-  }
+  padding: 0 10px;
+`;
+const AddTodo = styled.input`
+  width: 100%;
+  display: block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 0;
 `;

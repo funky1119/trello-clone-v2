@@ -1,11 +1,15 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 export interface ITodo {
   id: number;
   text: string;
+  boardId: string;
 }
 
-interface IBoardListProps {
+export interface IBoardListProps {
   [key: string]: ITodo[];
 }
 
@@ -16,4 +20,5 @@ export const boardListState = atom<IBoardListProps>({
     Doing: [],
     Done: [],
   },
+  effects_UNSTABLE: [persistAtom],
 });
