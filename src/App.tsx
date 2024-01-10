@@ -10,7 +10,7 @@ interface ICategory {
 }
 
 function App() {
-  const { register, handleSubmit } = useForm<ICategory>();
+  const { register, handleSubmit, setValue } = useForm<ICategory>();
   const [boardList, setBoardList] = useRecoilState(boardListState);
 
   // destination 종료 위치 정보, source: 시작 위치 정보
@@ -52,6 +52,7 @@ function App() {
     );
     if (categoryCheck.length > 0) return;
 
+    setValue("cate", "");
     setBoardList((prev) => ({
       ...prev,
       [cate]: [],

@@ -12,7 +12,7 @@ interface IDragabbleCardProps {
 }
 
 interface ICardProps {
-  isDragging: boolean;
+  $isDragging: boolean;
 }
 
 function DragabbleCard({
@@ -36,7 +36,7 @@ function DragabbleCard({
     <Draggable draggableId={`${toDoId}`} index={index}>
       {(provider, snapshot) => (
         <Card
-          isDragging={snapshot.isDragging}
+          $isDragging={snapshot.isDragging}
           ref={provider.innerRef}
           {...provider.draggableProps}
           {...provider.dragHandleProps}
@@ -58,10 +58,10 @@ const Card = styled.div<ICardProps>`
   border-radius: 5px;
   padding: 10px 10px;
   background-color: ${(props) =>
-    props.isDragging ? props.theme.bgColor : props.theme.cardColor};
-  color: ${(props) => (props.isDragging ? "#FFF" : "none")};
+    props.$isDragging ? props.theme.bgColor : props.theme.cardColor};
+  color: ${(props) => (props.$isDragging ? "#FFF" : "none")};
   box-shadow: ${(props) =>
-    props.isDragging ? "0px 2px 5px rgba(0, 0, 0 , 0.5)" : "none"};
+    props.$isDragging ? "0px 2px 5px rgba(0, 0, 0 , 0.5)" : "none"};
   display: flex;
   justify-content: space-between;
   align-items: center;

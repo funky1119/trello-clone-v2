@@ -10,8 +10,8 @@ interface BoardProps {
   boardId: string;
 }
 interface AraaProps {
-  isDraggingOver: boolean;
-  draggingFromThisWith: boolean;
+  $isDraggingOver: boolean;
+  $draggingFromThisWith: boolean;
 }
 
 interface IForm {
@@ -37,22 +37,24 @@ function Board({ toDos, boardId }: BoardProps) {
     setValue("toDo", "");
   };
 
+  const handleDeleteBoard = () => {
+    setBoardList((prev): any => {
+      const keys = Object.keys(prev).filter((item) => item !== boardId);
+
+      const newBoardList: Record<string, ITodo[]> = {};
+      keys.forEach((item) => (newBoardList[item] = prev[item]));
+
+      return newBoardList;
+    });
+  };
+
   return (
     <Wrapper>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <TitleWrap>
+        <div />
         <Title>{boardId}</Title>
-        <button
-          style={{ position: "absolute", margin: "0 auto", marginRight: 0 }}
-        >
-          s
-        </button>
-      </div>
+        <DeleteBtn onClick={handleDeleteBoard}>X</DeleteBtn>
+      </TitleWrap>
       <Form onSubmit={handleSubmit(onValid)}>
         <AddTodo
           {...register("toDo", { required: true })}
@@ -63,8 +65,8 @@ function Board({ toDos, boardId }: BoardProps) {
       <Droppable droppableId={boardId}>
         {(provider, snapshot) => (
           <Area
-            draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
-            isDraggingOver={snapshot.isDraggingOver}
+            $draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
+            $isDraggingOver={snapshot.isDraggingOver}
             ref={provider.innerRef}
             {...provider.droppableProps}
           >
@@ -96,17 +98,29 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const TitleWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px 5px;
+  margin-bottom: 10px;
+`;
 const Title = styled.h2`
   text-align: center;
-  margin-bottom: 10px;
   font-weight: 600;
   font-size: 18px;
 `;
+const DeleteBtn = styled.button`
+  border: 0;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 const Area = styled.div<AraaProps>`
   background-color: ${(props) =>
-    props.isDraggingOver
+    props.$isDraggingOver
       ? "#dfe6e9"
-      : props.draggingFromThisWith
+      : props.$draggingFromThisWith
       ? "#b2bec3"
       : "transparent"};
   flex-grow: 1;
